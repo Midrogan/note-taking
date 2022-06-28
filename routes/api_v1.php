@@ -19,6 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResources([
-    'workspaces' => WorkspaceController::class,
-]);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::apiResources([
+        'workspaces' => WorkspaceController::class,
+    ]);
+});
+
+
