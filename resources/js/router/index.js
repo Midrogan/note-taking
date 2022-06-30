@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Index from '../components/Index.vue'
-import Signup from '../components/Signup.vue'
-import Login from '../components/Login.vue'
-import Dashboard from '../components/Dashboard.vue'
-import Workspace from '../components/Workspace.vue'
+import Index from '../pages/Index.vue'
+import Signup from '../pages/Signup.vue'
+import Login from '../pages/Login.vue'
+import Dashboard from '../pages/Dashboard.vue'
+import Workspace from '../pages/Workspace.vue'
 
 const routes = [
     {
@@ -39,31 +39,25 @@ const router = createRouter({
     routes
 })
 
+router.beforeEach((to, from, next) => {
+    const token = localStorage.getItem('x_xsrf_token')
+    if (!token) {                
+        if (to.name === 'login' || to.name === 'signup' || to.name === 'index') {
+            return next()
+        } else {
+            return next({
+                name: 'login'
+            })
+        }
+    }
+
+    if (to.name === 'login' || to.name === 'signup' && token){
+        return next({
+            name: 'dashboard'
+        })
+    }
+
+    next();
+})
+
 export default router
-
-
-// const Home = () => import('./components/Home.vue');
-// const One = () => import('./components/One.vue');
-
-
-// const routes = [
-//     {
-//         path: '/',
-//         name: 'home',
-//         components: Home
-//     },
-
-//     {
-//         path: '/one',
-//         name: 'one',
-//         components: One
-//     },
-// ]
-
-// const router = createRouter({
-//     routes,
-//     history: createWebHistory()
-//     history: createWebHistory(process.env.BASE_URL)
-// })
-
-// export default router

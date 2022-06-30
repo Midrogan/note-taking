@@ -15,9 +15,9 @@ use App\Http\Controllers\Api\v1\WorkspaceController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::apiResources([
